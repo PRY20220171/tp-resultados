@@ -1,4 +1,4 @@
-package com.example.backresultados.contresultadoler;
+package com.example.backresultados.controller;
 
 import com.datastax.oss.driver.api.core.uuid.Uuids;
 import com.example.backresultados.entity.Resultado;
@@ -22,9 +22,9 @@ import java.util.Collections;
 import java.util.List;
 import java.util.UUID;
 
-@RestContresultadoler
+@RestController
 @RequestMapping("/resultados")
-public class ResultadoContresultadoler {
+public class ResultadoController {
     @Autowired
     private ResultadoService resultadoService;
 
@@ -81,10 +81,13 @@ public class ResultadoContresultadoler {
     @Autowired
     ProducerService rabbitMQSender;
 
-    @GetMapping(value = "/test")
-    public String producer() {
-        rabbitMQSender.sendMsg(new Resultado());
-        return "Message sent to the RabbitMQ JavaInUse Successfully";
+    @GetMapping(value = "/test/{id}")
+    public ResponseEntity<Resultado> producer(@PathVariable("id") String id) {
+        Resultado res = (Resultado) rabbitMQSender.sendMsg(id);
+        if(res==null){
+            return ResponseEntity.notFound().build();
+        }
+        return ResponseEntity.ok(res);
     }
 
 

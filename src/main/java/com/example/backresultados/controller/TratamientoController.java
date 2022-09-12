@@ -1,6 +1,7 @@
 package com.example.backresultados.controller;
 
 import com.datastax.oss.driver.api.core.uuid.Uuids;
+import com.example.backresultados.entity.Resultado;
 import com.example.backresultados.entity.Tratamiento;
 import com.example.backresultados.service.TratamientoService;
 import com.example.backresultados.service.ProducerService;
@@ -77,16 +78,5 @@ public class TratamientoController {
         }
         return ResponseEntity.ok(tratamientoDelete);
     }
-
-    @Autowired
-    ProducerService rabbitMQSender;
-
-    @GetMapping(value = "/test")
-    public String producer() {
-        rabbitMQSender.sendMsg(new Tratamiento());
-        return "Message sent to the RabbitMQ JavaInUse Successfully";
-    }
-
-
 
 }

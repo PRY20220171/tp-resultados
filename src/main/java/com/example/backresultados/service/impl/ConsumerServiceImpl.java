@@ -28,19 +28,18 @@ public class ConsumerServiceImpl implements ConsumerService {
                     exchange = @Exchange(value = "${spring.rabbitmq.exchange}"),
                     key = "${spring.rabbitmq.routingkey}")
     )
-    public Object consumerMessage(UUID proId) throws AmqpIOException {
+    public Object consumerMessage(String objId) throws AmqpIOException {
         System.out.println("=============== Message ==================");
-        System.out.println(proId);
+        System.out.println(objId);
         System.out.println("==========================================");
-        Resultado product= resultadoService.getResultado(proId);
-        if(product==null){
+        Resultado obj= resultadoService.getResultado(UUID.fromString(objId));
+        if(obj==null){
             return null;
         }
         else{
-            ObjectMapper obj = new ObjectMapper();
+            ObjectMapper objmap = new ObjectMapper();
             try {
-                String pro = obj.writeValueAsString(product);
-                return pro;
+                return objmap.writeValueAsString(obj);
             }catch(JsonProcessingException e){
                 return null;
             }

@@ -1,6 +1,6 @@
-package com.example.backtratamientos.service;
+package com.example.backresultados.service;
 
-import com.example.backtratamientos.entity.Tratamiento;
+import com.example.backresultados.entity.Tratamiento;
 
 import java.util.List;
 import java.util.UUID;

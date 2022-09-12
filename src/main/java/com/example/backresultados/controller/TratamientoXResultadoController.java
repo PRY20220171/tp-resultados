@@ -1,4 +1,4 @@
-package com.example.backresultados.contresultadoler;
+package com.example.backresultados.controller;
 
 import com.datastax.oss.driver.api.core.uuid.Uuids;
 import com.example.backresultados.entity.TratamientoXResultado;
@@ -22,9 +22,11 @@ import java.util.Collections;
 import java.util.List;
 import java.util.UUID;
 
-@RestContresultadoler
-@RequestMapping("/tratamientosxresultados")
-public class TratamientoXResultadoContresultadoler {
+//@RestController
+//@RequestMapping("/tratamientosxresultados")
+public class TratamientoXResultadoController {
+    /*
+    //TODO: implementar metodos en resultados y tratamiento respectivamente.
     @Autowired
     private TratamientoXResultadoService tratamientoxresultadoService;
 
@@ -78,15 +80,6 @@ public class TratamientoXResultadoContresultadoler {
         return ResponseEntity.ok(tratamientoxresultadoDelete);
     }
 
-    @Autowired
-    ProducerService rabbitMQSender;
-
-    @GetMapping(value = "/test")
-    public String producer() {
-        rabbitMQSender.sendMsg(new TratamientoXResultado());
-        return "Message sent to the RabbitMQ JavaInUse Successfully";
-    }
-
-
+     */
 
 }

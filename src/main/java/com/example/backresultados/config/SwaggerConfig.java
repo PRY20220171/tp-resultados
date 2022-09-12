@@ -28,10 +28,10 @@ public class SwaggerConfig {
     public ApiInfo apiInfo() {
 
         return new ApiInfoBuilder()
-                .title("API de ejemplo")
-                .description("API de Pacientes de TBD")
+                .title("API de resultados")
+                .description("Microservicio de Resultados de Salud")
                 .version("1.0")
-                .contact(new Contact("TBD", "", ""))
+                .contact(new Contact("Salud", "", ""))
                 .build();
     }
 }
