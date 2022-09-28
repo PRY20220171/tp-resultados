@@ -1,0 +1,34 @@
+FROM maven:3.6.3-openjdk-8-slim AS builder
+WORKDIR /opt/app
+COPY . .
+RUN mvn -e clean verify
+
+FROM openjdk:18-slim as base
+WORKDIR /opt/app
+COPY --from=builder /opt/app/target/*.jar ./
+COPY --from=builder /opt/app/src/main/resources/* ./
+ARG ENVIRONMENT=local
+ARG DEFAULT_HOST=host.docker.internal
+ARG CASSANDRA_SSL=false
+ARG CASSANDRA_DATACENTER=datacenter1
+ARG CASSANDRA_USERNAME=cassandra
+ARG CASSANDRA_PASSWORD=cassandra
+ARG CASSANDRA_PORT=9042
+ARG RABBITMQ_PORT=5672
+ARG EXPOSE_PORT=8080
+ENV EXPOSE_PORT=$EXPOSE_PORT
+EXPOSE $EXPOSE_PORT
+ENV CASSANDRA_DATACENTER=$CASSANDRA_DATACENTER
+ENV CASSANDRA_USERNAME=$CASSANDRA_USERNAME
+ENV CASSANDRA_PASSWORD=$CASSANDRA_PASSWORD
+ENV CASSANDRA_HOST=$DEFAULT_HOST
+ENV CASSANDRA_PORT=$CASSANDRA_PORT
+ENV CASSANDRA_SSL=$CASSANDRA_SSL
+ENV RABBITMQ_HOST=$DEFAULT_HOST
+ENV RABBITMQ_PORT=$RABBITMQ_PORT
+ENV ENVIRONMENT=$ENVIRONMENT
+ARG PRODUCTION_CONFIG=""
+RUN echo "${PRODUCTION_CONFIG}" > /opt/app/application-prod.properties.txt
+ENTRYPOINT java -Djava.security.egd=file:/dev/./urandom -jar /opt/app/*.jar --spring.config.location=/opt/app/application.properties
+
+
