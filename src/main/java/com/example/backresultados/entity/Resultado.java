@@ -39,11 +39,10 @@ public class Resultado  implements Serializable {
     private UUID id;
 
     @ApiModelProperty(value="Es la fecha de registro del resultado del paciente", dataType="datetime", position=2)
-    @NotEmpty(message = "La fecha de registro no puede ser vacio")
     @NotNull(message = "La fecha de registro no puede ser nulo")
     @Column("registro")
     @CassandraType(type = CassandraType.Name.TIMESTAMP)
-    private String registro;
+    private Date registro;
 
     @ApiModelProperty(value="Es la descripción del resultado del paciente", dataType="text", position=3)
     @NotEmpty(message = "La descripcion no puede ser vacio")
