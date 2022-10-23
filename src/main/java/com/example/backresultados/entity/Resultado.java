@@ -1,4 +1,5 @@
 package com.example.backresultados.entity;
+
 import com.fasterxml.jackson.annotation.JsonIdentityInfo;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
@@ -15,6 +16,7 @@ import org.springframework.data.cassandra.core.mapping.PrimaryKey;
 import org.springframework.data.cassandra.core.mapping.Table;
 
 import java.io.Serializable;
+import java.time.LocalDate;
 import java.util.Date;
 import java.util.UUID;
 
@@ -28,9 +30,9 @@ import javax.validation.constraints.NotNull;
 @Builder
 @Table
 @JsonIdentityInfo(generator = ObjectIdGenerators.IntSequenceGenerator.class, property = "@id", scope = Resultado.class)
-public class Resultado  implements Serializable {
+public class Resultado implements Serializable {
 
-    @ApiModelProperty(value="ID del resultado del paciente", dataType="uuid", position=1)
+    @ApiModelProperty(value = "ID del resultado del paciente", dataType = "uuid", position = 1)
     @Id
     @Column("idresultado")
     @CassandraType(type = CassandraType.Name.UUID)
@@ -38,20 +40,20 @@ public class Resultado  implements Serializable {
     @PrimaryKey
     private UUID id;
 
-    @ApiModelProperty(value="Es la fecha de registro del resultado del paciente", dataType="datetime", position=2)
+    @ApiModelProperty(value = "Es la fecha de registro del resultado del paciente", dataType = "date", position = 2)
     @NotNull(message = "La fecha de registro no puede ser nulo")
     @Column("registro")
-    @CassandraType(type = CassandraType.Name.TIMESTAMP)
-    private Date registro;
+    @CassandraType(type = CassandraType.Name.DATE)
+    private LocalDate registro;
 
-    @ApiModelProperty(value="Es la descripción del resultado del paciente", dataType="text", position=3)
+    @ApiModelProperty(value = "Es la descripción del resultado del paciente", dataType = "text", position = 3)
     @NotEmpty(message = "La descripcion no puede ser vacio")
     @NotNull(message = "La descripcion no puede ser nulo")
-    @Column( "descripcion")
+    @Column("descripcion")
     @CassandraType(type = CassandraType.Name.TEXT)
     private String descripcion;
 
-    @ApiModelProperty(value="Es el estado del resultado del paciente", dataType="text", position=4)
+    @ApiModelProperty(value = "Es el estado del resultado del paciente", dataType = "text", position = 4)
     @NotEmpty(message = "El estado no puede ser vacio")
     @NotNull(message = "El estado no puede ser nulo")
     @Column("estado")
